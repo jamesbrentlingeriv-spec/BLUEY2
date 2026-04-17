@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Bluey - Season 3 (11 Episodes)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .header-actions {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .home-btn {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.95);
+            color: #3b7dd8;
+            font-weight: 800;
+            border: 2px solid #3b7dd8;
+            border-radius: 999px;
+            padding: 10px 18px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, transform 0.2s;
+            margin: 0 6px;
+        }
+
+        .home-btn:hover {
+            background: #3b7dd8;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .video-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-overlay {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            /* 16:9 Aspect Ratio */
+            overflow: hidden;
+        }
+
+        .video-thumbnail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .video-card:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            color: #667eea;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .play-button:hover {
+            transform: scale(1.1);
+        }
+
+        .video-info {
+            padding: 20px;
+        }
+
+        .video-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .video-episode {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 1200px;
+            padding-bottom: 56.25%;
+            /* 16:9 Aspect Ratio */
+            height: 0;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-content iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 32px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+            cursor: pointer;
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>🐾 Watch Bluey 🐾</h1>
+        <p>Season 3 - 11 Episodes | Jumpshare Streaming</p>
+    </div>
+
+    <div class="header-actions">
+        <a href="index.html" class="home-btn">← Back to Home</a>
+    </div>
+
+    <div id="videoGrid" class="video-grid"></div>
+
+    <div id="modal" class="modal">
+        <button class="close-modal" onclick="closeModal()">×</button>
+        <div class="modal-content">
+            <iframe id="videoPlayer" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen
+                allow="autoplay; fullscreen" style="width:100%;height:100%;"></iframe>
+        </div>
+    </div>
+
+    <script>
+        const episodes = [
+            { title: 'Bedroom', episode: 'S03E01', embedUrl: 'https://jumpshare.com/embed/Em6mbdVsCZsb8t5oOrSD', thumbnail: 'thumbs/episode 1.jpg' },
+            { title: 'Obstacle Course', episode: 'S03E02', embedUrl: 'https://jumpshare.com/embed/ZcZ3wj6gMLqUhauWi99s', thumbnail: 'thumbs/episode 2.jpg' },
+            { title: 'Promises', episode: 'S03E03', embedUrl: 'https://jumpshare.com/embed/D2kfWhNM6GrRCQz3bZcw', thumbnail: 'thumbs/episode 3.jpg' },
+            { title: 'Omelette', episode: 'S03E04', embedUrl: 'https://jumpshare.com/embed/d3empEe0i9Q0uA1dH7XH', thumbnail: 'thumbs/episode 4.jpg' },
+            { title: 'Born Yesterday', episode: 'S03E05', embedUrl: 'https://jumpshare.com/embed/aqpcv12wLfmEGmo4gj3k', thumbnail: 'thumbs/episode 5.jpg' },
+            { title: 'Mini Bluey', episode: 'S03E06', embedUrl: 'https://jumpshare.com/embed/ogdJkXhWiWOTyaAXNfRQ', thumbnail: 'thumbs/episode 6.jpg' },
+            { title: 'Unicorse', episode: 'S03E07', embedUrl: 'https://jumpshare.com/embed/7i0aK6I4KdbKHjUvZS8X', thumbnail: 'thumbs/episode 7.jpg' },
+            { title: 'Curry Quest', episode: 'S03E08', embedUrl: 'https://jumpshare.com/embed/mj517qOfUE2iF92BD2l6', thumbnail: 'thumbs/episode 8.jpg' },
+            { title: 'Magic', episode: 'S03E09', embedUrl: 'https://jumpshare.com/embed/WAmEzSC3I2UADt1tDXBT', thumbnail: 'thumbs/episode 9.jpg' },
+            { title: 'Chest', episode: 'S03E10', embedUrl: 'https://jumpshare.com/embed/mxlAepmCg8DYlDVnBuwE', thumbnail: 'thumbs/episode 10.jpg' },
+            { title: 'Sheepdog', episode: 'S03E11', embedUrl: 'https://jumpshare.com/embed/YLCjzzpQYIf4vr5kMdx8', thumbnail: 'thumbs/episode 11.jpg' }
+        ];
+
+        // Generate video cards
+        const grid = document.getElementById('videoGrid');
+        episodes.forEach(episode => {
+            const card = document.createElement('div');
+            card.className = 'video-card';
+            card.onclick = () => openModal(episode);
+            card.innerHTML = `
+                <div class="video-overlay">
+                    <img src="${episode.thumbnail}" class="video-thumbnail" loading="lazy" alt="${episode.title}">
+                    <div class="play-overlay">
+                        <button class="play-button">▶</button>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <div class="video-title">${episode.title}</div>
+                    <div class="video-episode">${episode.episode}</div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        function openModal(episode) {
+            const modal = document.getElementById('modal');
+            const player = document.getElementById('videoPlayer');
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            player.src = episode.embedUrl;
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            const player = document.getElementById('videoPlayer');
+
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+
+            player.src = '';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('modal').onclick = e => {
+            if (e.target === document.getElementById('modal')) {
+                closeModal();
+            }
+        };
+
+        // Close modal with Escape key
+        document.onkeydown = e => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        };
+    </script>
+</body>
+
+</html>
