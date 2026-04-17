@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Watch Bluey - Season 3 (11 Episodes)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -17,6 +18,51 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 30px;
+            background: #fff;
+            border-bottom: 3px solid #5ba4cf;
+            margin: -20px -20px 20px -20px;
+        }
+        .navbar .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        .navbar .brand-icon {
+            width: 42px;
+            height: 42px;
+            background: #c8dff5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .navbar .brand-icon img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+        .navbar .brand-text {
+            font-size: 1.35em;
+            font-weight: 800;
+            color: #1e3a5f;
+        }
+        .navbar .brand-text span {
+            color: #5ba4cf;
+        }
+        .navbar .nav-home {
+            color: #5ba4cf;
+            font-size: 1.4em;
+            text-decoration: none;
         }
 
         .header {
@@ -233,6 +279,14 @@
 </head>
 
 <body>
+    <nav class="navbar">
+        <a href="index.html" class="brand">
+            <div class="brand-icon"><img src="icon-512.png" alt="Reading Buddies Logo"></div>
+            <div class="brand-text">Reading <span>Buddies</span></div>
+        </a>
+        <a href="index.html" class="nav-home"><i class="fas fa-home"></i></a>
+    </nav>
+
     <div class="header">
         <h1>🐾 Watch Bluey 🐾</h1>
         <p>Season 3 - 11 Episodes</p>
